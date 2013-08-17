@@ -10,8 +10,8 @@
 
 @interface PickerTableViewCell : UITableViewCell
 
-@property (nonatomic, weak) IBOutlet UILabel *nameLabel;
-@property (nonatomic, weak) IBOutlet UILabel *prepTimeLabel;
-@property (nonatomic, weak) IBOutlet UIImageView *thumbnailImageView;
+@property (nonatomic, weak) IBOutlet UIImageView *column1;
+@property (nonatomic, weak) IBOutlet UILabel *column2;
+@property (nonatomic, weak) IBOutlet UILabel *column3;
 
 @end

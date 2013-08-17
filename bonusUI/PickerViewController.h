@@ -10,4 +10,6 @@
 
 @interface PickerViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource>
 
+@property (nonatomic, strong) NSDictionary *pickerDictionary;
+
 @end

@@ -57,7 +57,20 @@
 - (void)setUpBonusPicker
 {
     self.bonusPicker = [[PickerViewController alloc] init];
-    _pickerView = [self.bonusPicker view];
+	// Initialize table data
+    NSArray *column1 = [NSArray arrayWithObjects:@"Egg Benedict", @"Mushroom Risotto", @"Full Breakfast", @"Hamburger", @"Ham and Egg Sandwich", @"Creme Brelee", @"White Chocolate Donut", @"Starbucks Coffee", @"Vegetable Curry", @"Instant Noodle with Egg", @"Noodle with BBQ Pork", @"Japanese Noodle with Pork", @"Green Tea", @"Thai Shrimp Cake", @"Angry Birds Cake", @"Ham and Cheese Panini", nil];
+    
+    // Initialize thumbnails
+    NSArray *column2 = [NSArray arrayWithObjects:@"egg_benedict.jpg", @"mushroom_risotto.jpg", @"full_breakfast.jpg", @"hamburger.jpg", @"ham_and_egg_sandwich.jpg", @"creme_brelee.jpg", @"white_chocolate_donut.jpg", @"starbucks_coffee.jpg", @"vegetable_curry.jpg", @"instant_noodle_with_egg.jpg", @"noodle_with_bbq_pork.jpg", @"japanese_noodle_with_pork.jpg", @"green_tea.jpg", @"thai_shrimp_cake.jpg", @"angry_birds_cake.jpg", @"ham_and_cheese_panini.jpg", nil];
+    
+    // Initialize Preparation Time
+    NSArray *column3 = [NSArray arrayWithObjects:@"30 min", @"30 min", @"20 min", @"30 min", @"10 min", @"1 hour", @"45 min", @"5 min", @"30 min", @"8 min", @"20 min", @"20 min", @"5 min", @"1.5 hour", @"4 hours", @"10 min", nil];
+    [self.bonusPicker setPickerDictionary:[[NSDictionary alloc] initWithObjectsAndKeys:
+                                           column1, @"column1",
+                                           column2, @"column2",
+                                           column3, @"column3",
+                                           nil]];
+    _pickerView = [self.bonusPicker tableView];
     _pickerView.frame = CGRectMake(300,300,400,400);
     _pickerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self.view addSubview:_pickerView];

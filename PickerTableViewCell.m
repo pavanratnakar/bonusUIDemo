@@ -10,9 +10,9 @@
 
 @implementation PickerTableViewCell
 
-@synthesize nameLabel = _nameLabel;
-@synthesize prepTimeLabel = _prepTimeLabel;
-@synthesize thumbnailImageView = _thumbnailImageView;
+@synthesize column1 = _column1;
+@synthesize column2 = _column2;
+@synthesize column3 = _column3;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
