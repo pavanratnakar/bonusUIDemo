@@ -57,44 +57,41 @@
 - (void)setUpBonusPicker
 {
     self.bonusPicker = [[PickerViewController alloc] init];
-    
-    // TODO : MAKE THIS ARRAY BASED - IMPROVE THIS
-    UIView* tempView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 500, 500)];
 
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
-    NSString *iconFilePath = [[NSBundle mainBundle] pathForResource:@"blink" ofType:@"png"];
-    UIImage *icon = [[UIImage alloc] initWithContentsOfFile:iconFilePath];
-    [imageView setImage:icon];
-    
-    UILabel *date = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 100, 100)];
-    date.text = @"Thurday";
-    
-    UILabel *number = [[UILabel alloc] initWithFrame:CGRectMake(200, 0, 100, 100)];
-    number.text = @"1";
-    
-    [tempView addSubview:imageView];
-    [tempView addSubview:date];
-    [tempView addSubview:number];
-    
-    // SAMPLE PASSING MUTIPLE VIEWS
+    int i;
     NSMutableArray *views = [[NSMutableArray alloc] init];
-    [views addObject:tempView];
-    [views addObject:tempView];
-    [views addObject:tempView];
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDate *now = [NSDate date];
+    NSDate *startOfTheWeek;
+    NSTimeInterval interval;
+    [cal rangeOfUnit:NSWeekCalendarUnit
+           startDate:&startOfTheWeek
+            interval:&interval
+             forDate:now];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"EEE MMM dd HH:mm:ss ZZZ yyyy"]; // Adjust the date format
 
-//    // Initialize thumbnails
-//    NSArray *column1 = [NSArray arrayWithObjects:@"blink", @"grin", @"love", @"hamburger.jpg", @"ham_and_egg_sandwich.jpg", @"creme_brelee.jpg", @"white_chocolate_donut.jpg", @"starbucks_coffee.jpg", @"vegetable_curry.jpg", @"instant_noodle_with_egg.jpg", @"noodle_with_bbq_pork.jpg", @"japanese_noodle_with_pork.jpg", @"green_tea.jpg", @"thai_shrimp_cake.jpg", @"angry_birds_cake.jpg", @"ham_and_cheese_panini.jpg", nil];
-//
-//	// Initialize table data
-//    NSArray *column2 = [NSArray arrayWithObjects:@"Egg Benedict", @"Mushroom Risotto", @"Full Breakfast", @"Hamburger", @"Ham and Egg Sandwich", @"Creme Brelee", @"White Chocolate Donut", @"Starbucks Coffee", @"Vegetable Curry", @"Instant Noodle with Egg", @"Noodle with BBQ Pork", @"Japanese Noodle with Pork", @"Green Tea", @"Thai Shrimp Cake", @"Angry Birds Cake", @"Ham and Cheese Panini", nil];
-//    
-//    // Initialize Preparation Time
-//    NSArray *column3 = [NSArray arrayWithObjects:@"30 min", @"30 min", @"20 min", @"30 min", @"10 min", @"1 hour", @"45 min", @"5 min", @"30 min", @"8 min", @"20 min", @"20 min", @"5 min", @"1.5 hour", @"4 hours", @"10 min", nil];
-//    
+    for (i = 1; i <= 7; i++) {
+        UIView* tempView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 78, 78)];
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+        NSString *iconFilePath = [[NSBundle mainBundle] pathForResource:@"blink" ofType:@"png"];
+        UIImage *icon = [[UIImage alloc] initWithContentsOfFile:iconFilePath];
+        [imageView setImage:icon];
+        
+        UILabel *date = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 250, 78)];
+        date.text = [dateFormatter stringFromDate:[startOfTheWeek dateByAddingTimeInterval:(i *24 * 60 * 60)]];
+        
+        UILabel *number = [[UILabel alloc] initWithFrame:CGRectMake(350, 0, 78, 78)];
+        number.text =  [NSString stringWithFormat:@"%d", i];
+        
+        [tempView addSubview:imageView];
+        [tempView addSubview:date];
+        [tempView addSubview:number];
+        [views addObject:tempView];
+    }
 
-    [self.bonusPicker setPickerDictionary:[[NSDictionary alloc] initWithObjectsAndKeys:
-                                           views, @"views",
-                                           nil]];
+    [self.bonusPicker setPickerDictionary:[[NSDictionary alloc] initWithObjectsAndKeys:views, @"views",nil]];
     _pickerView = [self.bonusPicker tableView];
     _pickerView.frame = CGRectMake(300,300,400,400);
     _pickerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
