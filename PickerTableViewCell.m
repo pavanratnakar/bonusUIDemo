@@ -10,9 +10,7 @@
 
 @implementation PickerTableViewCell
 
-@synthesize column1 = _column1;
-@synthesize column2 = _column2;
-@synthesize column3 = _column3;
+@synthesize view = _view;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

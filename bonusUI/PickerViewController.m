@@ -11,9 +11,7 @@
 
 @interface PickerViewController ()
 {
-    NSArray *column1;
-    NSArray *column2;
-    NSArray *column3;
+    NSArray *views;
 }
 @end
 
@@ -34,9 +32,7 @@
 {
     [super viewDidLoad];
 
-    column1 = [self.pickerDictionary valueForKey:@"column1"];
-    column2 = [self.pickerDictionary valueForKey:@"column2"];
-    column3 = [self.pickerDictionary valueForKey:@"column3"];
+    views = [self.pickerDictionary valueForKey:@"views"];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -64,7 +60,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [column1 count];
+    return [views count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -88,10 +84,7 @@
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"PickerTableViewCell" owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
-    NSLog(@"%@",[column2 objectAtIndex:indexPath.row]);
-    cell.column1.image = [UIImage imageNamed:[column1 objectAtIndex:indexPath.row]];
-    cell.column2.text = [column2 objectAtIndex:indexPath.row];
-    cell.column3.text = [column3 objectAtIndex:indexPath.row];
+    [cell.view addSubview:[views objectAtIndex:indexPath.row]];
     return cell;
 }
 
@@ -101,7 +94,7 @@
     /*UIAlertView *messageAlert = [[UIAlertView alloc]
      initWithTitle:@"Row Selected" message:@"You've selected a row" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];*/
     UIAlertView *messageAlert = [[UIAlertView alloc]
-                                 initWithTitle:@"Row Selected" message:[column1 objectAtIndex:indexPath.row] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                 initWithTitle:@"Row Selected" message:[views objectAtIndex:indexPath.row] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     
     // Display the Hello World Message
     [messageAlert show];
