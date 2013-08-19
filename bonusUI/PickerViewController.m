@@ -84,6 +84,12 @@
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"PickerTableViewCell" owner:self options:nil];
         cell = [nib objectAtIndex:0];
     }
+//    if (cell.accessoryType == UITableViewCellAccessoryNone) {
+//        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+//        
+//    } else {
+//        cell.accessoryType = UITableViewCellAccessoryNone;
+//    }
     [cell.view addSubview:[views objectAtIndex:indexPath.row]];
     return cell;
 }

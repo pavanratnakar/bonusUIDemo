@@ -69,23 +69,40 @@
             interval:&interval
              forDate:now];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"EEE MMM dd HH:mm:ss ZZZ yyyy"]; // Adjust the date format
 
     for (i = 1; i <= 7; i++) {
-        UIView* tempView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 78, 78)];
-        
+        UIView* tempView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 400, 100)];
+        tempView.backgroundColor = [UIColor colorWithRed:223/255.0 green:126/255.0 blue:115/255.0 alpha:1];
+
+        // Add smiley icon
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
         NSString *iconFilePath = [[NSBundle mainBundle] pathForResource:@"blink" ofType:@"png"];
         UIImage *icon = [[UIImage alloc] initWithContentsOfFile:iconFilePath];
         [imageView setImage:icon];
-        
-        UILabel *date = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 250, 78)];
+
+        // Add day name
+        UILabel *dayName = [[UILabel alloc] initWithFrame:CGRectMake(100, 0, 200, 50)];
+        dayName.backgroundColor = [UIColor clearColor];
+        dayName.font = [UIFont boldSystemFontOfSize:15];
+        dayName.textColor = [UIColor blackColor];
+        [dateFormatter setDateFormat:@"EEEE"];
+        dayName.text = [dateFormatter stringFromDate:[startOfTheWeek dateByAddingTimeInterval:(i *24 * 60 * 60)]];
+
+        // Add date
+        UILabel *date = [[UILabel alloc] initWithFrame:CGRectMake(100, 40, 200, 50)];
+        [dateFormatter setDateFormat:@"MMMM d"];
+        date.backgroundColor = [UIColor clearColor];
+        date.font = [UIFont systemFontOfSize:15];
+        date.textColor = [UIColor blackColor];
         date.text = [dateFormatter stringFromDate:[startOfTheWeek dateByAddingTimeInterval:(i *24 * 60 * 60)]];
-        
-        UILabel *number = [[UILabel alloc] initWithFrame:CGRectMake(350, 0, 78, 78)];
+
+        // Add number
+        UILabel *number = [[UILabel alloc] initWithFrame:CGRectMake(300, 0, 100, 100)];
+        number.backgroundColor = [UIColor clearColor];
         number.text =  [NSString stringWithFormat:@"%d", i];
         
         [tempView addSubview:imageView];
+        [tempView addSubview:dayName];
         [tempView addSubview:date];
         [tempView addSubview:number];
         [views addObject:tempView];
