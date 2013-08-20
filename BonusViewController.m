@@ -15,6 +15,9 @@
 
 @implementation BonusViewController{
     UIView *_pickerView;
+    UIView *_contentView;
+    UIView *_contentLeftView;
+    UIView *_contentRightView;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -29,31 +32,69 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setupBonus];
     [self setupBonusUI];
     [self fillBonusUI];
 }
 
+- (void)setupBonus
+{
+    // setup background image
+    UIImageView *background = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg.jpg"]];
+    [self.view addSubview:background];
+    [self.view sendSubviewToBack:background];
+    //self.view.contentMode = UIViewContentModeScaleAspectFit;
+    
+    // setup content background
+    NSInteger width = self.view.bounds.size.width;
+    NSInteger height = self.view.bounds.size.height;
+    _contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width-100, height-100)];
+    UIImageView *contentBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"scrollpaper_bg.png"]];
+    [_contentView addSubview:contentBackground];
+    [_contentView sendSubviewToBack:contentBackground];
+    [self.view addSubview:_contentView];
+    
+    // setup left content container
+    _contentLeftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width-width/2, height-height/2)];
+    [_contentView addSubview:_contentLeftView];
+    
+    // setup right content container
+    _contentRightView = [[UIView alloc] initWithFrame:CGRectMake(width-width/2, 0, width-width/2, height-height/2)];
+    [_contentView addSubview:_contentRightView];
+}
+
 - (void)setupBonusTitle
 {
-    self.bonusTitle = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, 100, 100)];
-    self.bonusTitle.textColor = [UIColor whiteColor];
-    self.bonusTitle.font = [UIFont fontWithName:@"Arial" size:18];
-    self.bonusTitle.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tweed.png"]]; // using placeholder image
-    [self.view addSubview:self.bonusTitle];
+    self.bonusTitle = [[UILabel alloc] initWithFrame:CGRectMake(400, 0, 200, 200)];
+    self.bonusTitle.textColor = [UIColor blackColor];
+    self.bonusTitle.font = [UIFont fontWithName:@"Arial" size:40];
+    self.bonusTitle.backgroundColor = [UIColor clearColor];
+
+    [_contentRightView addSubview:self.bonusTitle];
 }
 
 - (void)setupBonusDescription
 {
-    self.bonusDescrption = [[UILabel alloc] initWithFrame:CGRectMake(20, 300, 300, 200)];
-    self.bonusDescrption.numberOfLines = 4;
-    self.bonusDescrption.textColor = [UIColor whiteColor];
-    self.bonusDescrption.font = [UIFont fontWithName:@"Arial" size:18];
-    self.bonusDescrption.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"tweed.png"]]; // using placeholder image
-    // this will cause automatic vertical resize when the table is resized
-    self.bonusDescrption.autoresizingMask = UIViewAutoresizingFlexibleHeight;;
-    [self.view addSubview:self.bonusDescrption];
+    UIView *contentContainer = [[UIView alloc] initWithFrame:CGRectMake(450, 200, 489, 431)];
+    
+    // Assign Background
+    UIImageView *contentBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"paper_bg.png"]];
+    [contentContainer addSubview:contentBackground];
+    [contentContainer sendSubviewToBack:contentBackground];
+    //contentContainer.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    
+    // Assign Text
+    self.bonusDescrption = [[UILabel alloc] initWithFrame:CGRectMake(50, 20, 400, 400)];
+    self.bonusDescrption.numberOfLines = 5;
+    self.bonusDescrption.textColor = [UIColor blackColor];
+    self.bonusDescrption.font = [UIFont fontWithName:@"Arial" size:35];
+    self.bonusDescrption.backgroundColor = [UIColor clearColor];
+    [contentContainer addSubview:self.bonusDescrption];
+    
+    [_contentRightView addSubview:contentContainer];
 }
 
+// TODO : add this to content view
 - (void)setUpBonusPicker
 {
     self.bonusPicker = [[PickerViewController alloc] init];
@@ -112,10 +153,11 @@
     _pickerView = [self.bonusPicker tableView];
     _pickerView.frame = CGRectMake(300,300,400,400);
     _pickerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [self.view addSubview:_pickerView];
+    [_contentView addSubview:_pickerView];
     [[self.bonusPicker tableView] reloadData];
 }
 
+// TODO : add this to content view
 - (void)setupBonusSubmitButton
 {
     self.bonusSubmitButton = [BonusViewController newButtonWithTitle:
@@ -141,7 +183,7 @@
 - (void)fillBonusUI
 {
     self.bonusTitle.text = @"Daily Bonus";
-    self.bonusDescrption.text = @"Complete a game today to get 4 pearls. Play every day to get bigger and bigger bonuses";
+    self.bonusDescrption.text = @"Complete a game today to get 4 pearls.\nPlay every day to get bigger and bigger bonuses";
 }
 
 - (void)didReceiveMemoryWarning
