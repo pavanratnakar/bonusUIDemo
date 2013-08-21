@@ -65,7 +65,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 184;
+    return 92;
 }
 
 #pragma mark - Table view data source
@@ -99,14 +99,18 @@
     NSLog(@"didSelectRowAtIndexPath");
     /*UIAlertView *messageAlert = [[UIAlertView alloc]
      initWithTitle:@"Row Selected" message:@"You've selected a row" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];*/
-    UIAlertView *messageAlert = [[UIAlertView alloc]
-                                 initWithTitle:@"Row Selected" message:[views objectAtIndex:indexPath.row] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    
-    // Display the Hello World Message
-    [messageAlert show];
+//    UIAlertView *messageAlert = [[UIAlertView alloc]
+//                                 initWithTitle:@"Row Selected" message:[views objectAtIndex:indexPath.row] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//    
+//    // Display the Hello World Message
+//    [messageAlert show];
     
     // Checked the selected row
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    UIImage *selectionBackground = [UIImage imageNamed:@"days_today_bg.jpg"];
+    cell.selectedBackgroundView =[[UIImageView alloc] init];
+    ((UIImageView *)cell.selectedBackgroundView).image = selectionBackground;
+    
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
